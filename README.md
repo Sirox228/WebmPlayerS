@@ -17,6 +17,6 @@ remove(video); \
 } \
 video.updateHitbox(); \
 add(video); \
-video.play(); \
+video.play();
 
 P.S. for know what new WebmPlayerS parametrs are doing, check parameters name in player file
