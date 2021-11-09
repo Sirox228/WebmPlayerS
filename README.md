@@ -8,7 +8,7 @@ haxelib git extension-webm https://github.com/Sirox228/extension-webm
 and put player file into the source code
 
 # example of usage
-var video = new VideoPlayer("assets/videos/vid.webm", true, true, -1, null, null, null, null);
+var video = new WebmPlayerS("assets/videos/vid.webm", true, true, -1, null, null, null, null);
 video.startcallback = () -> {
 ForExampleThisIsFunction(ok, scam, idk, 19383, 29920w);
 }
