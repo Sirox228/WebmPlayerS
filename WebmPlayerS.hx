@@ -73,10 +73,16 @@ class WebmPlayerS extends FlxSprite
 		videoplayer.fuck(io, false);
 		videoplayer.addEventListener(WebmEvent.PLAY, function(e) {
 			trace("playing");
+			if (startcallback != null) {
+				startcallback();
+			}
 			started = true;
 		});
 		videoplayer.addEventListener(WebmEvent.COMPLETE, function(e) {
 			trace("ended");
+			if (endcallback != null) {
+				endcallback();
+			}
 			ended = true;
 		});
 		videoplayer.addEventListener(WebmEvent.STOP, function(e) {
@@ -208,19 +214,6 @@ class WebmPlayerS extends FlxSprite
 				}
 			}
 			prevSoundMultiplier = soundMultiplier;
-			}
-		}
-		
-		if (started) {
-			started = false;
-			if (startcallback != null) {
-				startcallback();
-			}
-		}
-		if (ended) {
-			ended = false;
-			if (endcallback != null) {
-				endcallback();
 			}
 		}
 	}
