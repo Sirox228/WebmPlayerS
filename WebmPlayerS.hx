@@ -40,8 +40,11 @@ class WebmPlayerS extends FlxSprite
 	
 	public var useSound:Bool = false;
 	
-	public function new(source:String, ownCamera:Bool = false, makeFullScreen:Bool = false, frameSkipLimit:Int = -1, okX:Float = null, okY:Float = null, okWidth:Float = null, okHeight:Float = null) 
+	public function new(source:String, ownCamera:Bool = false, frameSkipLimit:Int = -1, okX:Float = null, okY:Float = null, okWidth:Float = null, okHeight:Float = null) 
     {
+    	x = 0;
+        y = 0;
+
     	if (okX != null) {
         	x = okX;
         }
@@ -53,10 +56,6 @@ class WebmPlayerS extends FlxSprite
         }
         if (okHeight != null) {
         	height = okHeight;
-        }
-        
-        if (makeFullScreen) {
-        	setGraphicSize(FlxG.width);
         }
 
         super(x, y);
