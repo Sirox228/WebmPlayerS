@@ -40,32 +40,23 @@ class WebmPlayerS extends FlxSprite
 	
 	public var useSound:Bool = false;
 	
-	public var lmaoPitch:Bool = false;
-	
-	public function new(source:String, ownCamera:Bool = false, pitchToScreenSizeEveryFrame:Bool = false, frameSkipLimit:Int = -1, okX:Float = null, okY:Float = null, okWidth:Float = null, okHeight:Float = null) 
+	public function new(source:String, ownCamera:Bool = false, makeFullScreen:Bool = false, frameSkipLimit:Int = -1, okX:Float = null, okY:Float = null, okWidth:Float = null, okHeight:Float = null) 
     {
-    	lmaoPitch = pitchToScreenSizeEveryFrame;
-    
-    	//x, y, width, height calculating is automatic, but if you want, you can enter your value
-    	if (okX == null) {
-    	    x = calc(0);
-        } else {
+    	if (okX != null) {
         	x = okX;
         }
-        if (okY == null) {
-            y = calc(1);
-        } else {
+        if (okY != null) {
         	y = okY;
         }
-        if (okWidth == null) {
-            width = calc(2);
-        } else {
+        if (okWidth != null) {
         	width = okWidth;
         }
-        if (okHeight == null) {
-            height = calc(3);
-        } else {
+        if (okHeight != null) {
         	height = okHeight;
+        }
+        
+        if (makeFullScreen) {
+        	setGraphicSize(FlxG.width);
         }
 
         super(x, y);
@@ -119,30 +110,6 @@ class WebmPlayerS extends FlxSprite
 		}
     }
     
-    public function recalc(okX:Float = null, okY:Float = null, okWidth:Float = null, okHeight:Float = null)
-    {
-    	if (okX == null) {
-    	    x = calc(0);
-        } else {
-        	x = okX;
-        }
-        if (okY == null) {
-            y = calc(1);
-        } else {
-        	y = okY;
-        }
-        if (okWidth == null) {
-            width = calc(2);
-        } else {
-        	width = okWidth;
-        }
-        if (okHeight == null) {
-            height = calc(3);
-        } else {
-        	height = okHeight;
-        }
-    }
-    
     public function getThing(source:String)
     {
     	#if mobile
@@ -153,53 +120,6 @@ class WebmPlayerS extends FlxSprite
         return null;
         #end
     }
-    
-    public static function calc(ind:Int):Dynamic
-	{
-		var stageWidth:Int = Lib.current.stage.stageWidth;
-		var stageHeight:Int = Lib.current.stage.stageHeight;
-
-		var width:Float = Dimensions.width;
-		var height:Float = Dimensions.height;
-		
-		var ratioX:Float = height / width;
-		var ratioY:Float = width / height;
-		var appliedWidth:Float = stageHeight * ratioY;
-		var appliedHeight:Float = stageWidth * ratioX;
-		var remainingX:Float = stageWidth - appliedWidth;
-		var remainingY:Float = stageHeight - appliedHeight;
-		remainingX = remainingX / 2;
-		remainingY = remainingY / 2;
-		
-		appliedWidth = Std.int(appliedWidth);
-		appliedHeight = Std.int(appliedHeight);
-		
-		if (appliedHeight > stageHeight)
-		{
-			remainingY = 0;
-			appliedHeight = stageHeight;
-		}
-		
-		if (appliedWidth > stageWidth)
-		{
-			remainingX = 0;
-			appliedWidth = stageWidth;
-		}
-		
-		switch(ind)
-		{
-			case 0:
-				return remainingX;
-			case 1:
-				return remainingY;
-			case 2:
-				return appliedWidth;
-			case 3:
-				return appliedHeight;
-		}
-		
-		return null;
-	}
 	
 	public function play():Void
 	{
@@ -252,13 +172,6 @@ class WebmPlayerS extends FlxSprite
 	override public function update(elapsed:Float)
 	{
 		super.update(elapsed);
-		
-		if (lmaoPitch) {
-			x = calc(0);
-			y = calc(1);
-			width = calc(2);
-			height = calc(3);
-		}
 		
 		if (useSound)
 		{
